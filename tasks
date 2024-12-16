@@ -1,45 +1,45 @@
-class Person {
-    private String name, address, phone, email;
+class Box {
+    private double w, h, d;
 
-    public Person(String n, String a, String p, String e) {
-        name = n; address = a; phone = p; email = e;
+    public Box(double w, double h, double d) {
+        this.w = w; this.h = h; this.d = d;
     }
 
-    public String toString() {
-        return String.format("Name: %s, Address: %s, Phone: %s, Email: %s", name, address, phone, email);
-    }
-}
-
-class Employee extends Person {
-    private double salary; 
-    private String hireDate;
-
-    public Employee(String n, String a, String p, String e, double s, String d) {
-        super(n, a, p, e); salary = s; hireDate = d;
-    }
-
-    public String toString() {
-        return super.toString() + String.format(", Salary: %.2f, Hire Date: %s", salary, hireDate);
+    public double volume() {
+        return w * h * d;
     }
 }
 
-class Faculty extends Employee {
-    private int officeHours; 
-    private String rank;
+class BoxWeight extends Box {
+    private double weight;
 
-    public Faculty(String n, String a, String p, String e, double s, String d, int o, String r) {
-        super(n, a, p, e, s, d); officeHours = o; rank = r;
+    public BoxWeight(double w, double h, double d, double weight) {
+        super(w, h, d);
+        this.weight = weight;
     }
 
-    public String toString() {
-        return super.toString() + String.format(", Office Hours: %d, Rank: %s", officeHours, rank);
+    public double getWeight() {
+        return weight;
+    }
+}
+
+class Shipment extends BoxWeight {
+    private double cost;
+
+    public Shipment(double w, double h, double d, double weight, double cost) {
+        super(w, h, d, weight);
+        this.cost = cost;
+    }
+
+    public double getCost() {
+        return cost;
     }
 }
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println(new Person("Alice", "123 Main St", "555-1234", "alice@example.com"));
-        System.out.println(new Employee("Bob", "456 Elm St", "555-5678", "bob@example.com", 50000.00, "2021-01-15"));
-        System.out.println(new Faculty("Charlie", "789 Oak St", "555-8765", "charlie@example.com", 60000.00, "2020-08-20", 10, "Professor"));
+        Shipment s = new Shipment(2, 3, 4, 5, 10);
+        System.out.printf("Volume: %.2f, Weight: %.2f, Cost: %.2f%n", s.volume(), s.getWeight(), s.getCost());
     }
 }
+
