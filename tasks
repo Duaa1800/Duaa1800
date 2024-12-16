@@ -1,27 +1,33 @@
-class PaymentProcessor {
-    // Default payment method
-    public void processPayment() {
-        System.out.println("Processing default payment.");
+class Book {
+    private String title, author, ISBN;
+    private int yearPublished, copiesAvailable;
+
+    public Book(String title, String author) { this(title, author, null, 0, 0); }
+    public Book(String title, String author, String ISBN) { this(title, author, ISBN, 0, 0); }
+    public Book(String title, String author, String ISBN, int yearPublished, int copiesAvailable) {
+        this.title = title; this.author = author; this.ISBN = ISBN; 
+        this.yearPublished = yearPublished; this.copiesAvailable = copiesAvailable;
     }
 
-    
-    public void processPayment(int amount) {
-        System.out.printf("Processing payment of amount %d.%n", amount);
+    public void display() {
+        System.out.printf("%s by %s (ISBN: %s) - Year: %d, Copies: %d%n", 
+                          title, author, ISBN == null ? "N/A" : ISBN, yearPublished, copiesAvailable);
     }
 
-   
-    public void processPayment(int amount, String customerName) {
-        System.out.printf("Processing payment of %d for %s.%n", amount, customerName);
-    }
+    public void updateCopies(int newCopies) { copiesAvailable = newCopies; }
 }
 
-public class Main {
+public class LibraryManagement {
     public static void main(String[] args) {
-        PaymentProcessor processor = new PaymentProcessor();
-        
-        processor.processPayment(); // No parameters
-        processor.processPayment(100); // One integer parameter
-        processor.processPayment(200, "Alice"); // Two parameters
+        Book[] books = {
+            new Book("1984", "George Orwell"),
+            new Book("The Great Gatsby", "F. Scott Fitzgerald", "9780743273565"),
+            new Book("To Kill a Mockingbird", "Harper Lee", "9780061120084", 1960, 5)
+        };
+
+        for (Book book : books) book.display();
+        books[2].updateCopies(10); // Update copies for the third book
+        System.out.println("\nAfter updating copies:");
+        books[2].display();
     }
 }
-
