@@ -1,26 +1,35 @@
-class Student {
-    private String name;
-    private int rollNumber;
-    private double[] grades;
+class Car {
+    private String make, model;
+    private int year;
+    private double price;
 
-    public Student(String name, int rollNumber, double[] grades) {
-        this.name = name; this.rollNumber = rollNumber; this.grades = grades;
-    }
-
-    public double average() {
-        double sum = 0;
-        for (double g : grades) sum += g;
-        return sum / grades.length;
+    public Car(String make, String model, int year, double price) {
+        this.make = make; this.model = model; this.year = year; this.price = price;
     }
 
     public void display() {
-        System.out.printf("%s (Roll No: %d): Avg = %.2f%n", name, rollNumber, average());
+        System.out.printf("%s %s (%d): $%.2f - Classic: %b%n", make, model, year, price, isClassic());
+    }
+
+    public void applyDiscount(double percentage) {
+        price *= (1 - percentage / 100);
+    }
+
+    public boolean isClassic() {
+        return 2024 - year > 20; // Assuming current year is 2024
     }
 }
 
-public class SchoolApp {
+public class Showroom {
     public static void main(String[] args) {
-        new Student("Alice", 101, new double[]{85.5, 90.0, 78.0}).display();
-        new Student("Bob", 102, new double[]{88.0, 92.5, 80.0}).display();
+        Car[] cars = { new Car("Ford", "Mustang", 1967, 30000), new Car("Toyota", "Camry", 2020, 24000) };
+
+        for (Car car : cars) {
+            car.display();
+            if (car.year == 2020) car.applyDiscount(10); // Apply discount to Camry
+        }
+        
+        System.out.println("After discount:");
+        for (Car car : cars) car.display();
     }
 }
