@@ -1,30 +1,26 @@
-class Course {
-    private String name, id; 
-    protected int credits;
+import java.util.Scanner;
 
-    public Course(String name, String id) { this(name, id, 0); }
-    public Course(String name, String id, int credits) { this.name = name; this.id = id; this.credits = credits; }
-    
-    public String getDetails() { return "Course: " + name + ", ID: " + id; }
-}
-
-class Instructor extends Course {
-    private String name; 
-    protected String department;
-
-    public Instructor(String name, String department) { super("Unknown", "N/A"); this.name = name; this.department = department; }
-    public Instructor(String name, String department, Course course) { super(course.name, course.id, course.credits); this.name = name; this.department = department; }
-
-    @Override
-    public String getDetails() { return "Instructor: " + name + ", " + super.getDetails(); }
-}
-
-public class CourseManagement {
+public class TemperatureReport {
     public static void main(String[] args) {
-        Course c = new Course("Java Programming", "CS101", 3);
-        Instructor i = new Instructor("Alice Smith", "CS", c);
-        
-        System.out.println(c.getDetails());
-        System.out.println(i.getDetails());
+        double[] temps = new double[7];
+        Scanner scanner = new Scanner(System.in);
+
+        for (int i = 0; i < 7; i++) {
+            System.out.print("Enter temp for day " + (i + 1) + ": ");
+            temps[i] = scanner.nextDouble();
+        }
+
+        double sum = 0, max = temps[0], min = temps[0];
+        for (double temp : temps) {
+            sum += temp;
+            if (temp > max) max = temp;
+            if (temp < min) min = temp;
+        }
+
+        System.out.printf("Avg: %.2f, Highest: %.2f, Lowest: %.2f%n", sum / 7, max, min);
+        for (int i = 0; i < 7; i++) {
+            System.out.printf("Day %d: %.2f%n", i + 1, temps[i]);
+        }
+        scanner.close();
     }
 }
