@@ -1,33 +1,30 @@
-class Book {
-    private String title, author, ISBN;
-    private int yearPublished, copiesAvailable;
+class Course {
+    private String name, id; 
+    protected int credits;
 
-    public Book(String title, String author) { this(title, author, null, 0, 0); }
-    public Book(String title, String author, String ISBN) { this(title, author, ISBN, 0, 0); }
-    public Book(String title, String author, String ISBN, int yearPublished, int copiesAvailable) {
-        this.title = title; this.author = author; this.ISBN = ISBN; 
-        this.yearPublished = yearPublished; this.copiesAvailable = copiesAvailable;
-    }
-
-    public void display() {
-        System.out.printf("%s by %s (ISBN: %s) - Year: %d, Copies: %d%n", 
-                          title, author, ISBN == null ? "N/A" : ISBN, yearPublished, copiesAvailable);
-    }
-
-    public void updateCopies(int newCopies) { copiesAvailable = newCopies; }
+    public Course(String name, String id) { this(name, id, 0); }
+    public Course(String name, String id, int credits) { this.name = name; this.id = id; this.credits = credits; }
+    
+    public String getDetails() { return "Course: " + name + ", ID: " + id; }
 }
 
-public class LibraryManagement {
-    public static void main(String[] args) {
-        Book[] books = {
-            new Book("1984", "George Orwell"),
-            new Book("The Great Gatsby", "F. Scott Fitzgerald", "9780743273565"),
-            new Book("To Kill a Mockingbird", "Harper Lee", "9780061120084", 1960, 5)
-        };
+class Instructor extends Course {
+    private String name; 
+    protected String department;
 
-        for (Book book : books) book.display();
-        books[2].updateCopies(10); // Update copies for the third book
-        System.out.println("\nAfter updating copies:");
-        books[2].display();
+    public Instructor(String name, String department) { super("Unknown", "N/A"); this.name = name; this.department = department; }
+    public Instructor(String name, String department, Course course) { super(course.name, course.id, course.credits); this.name = name; this.department = department; }
+
+    @Override
+    public String getDetails() { return "Instructor: " + name + ", " + super.getDetails(); }
+}
+
+public class CourseManagement {
+    public static void main(String[] args) {
+        Course c = new Course("Java Programming", "CS101", 3);
+        Instructor i = new Instructor("Alice Smith", "CS", c);
+        
+        System.out.println(c.getDetails());
+        System.out.println(i.getDetails());
     }
 }
