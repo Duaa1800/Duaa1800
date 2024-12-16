@@ -1,48 +1,17 @@
-class Vehicle {
-    private String m, mod; 
-    protected int y;
-
-    public Vehicle(String m, String mod, int y) {
-        this.m = m; this.mod = mod; this.y = y;
-    }
-
-    public String display() {
-        return String.format("Manufacturer: %s, Model: %s, Year: %d", m, mod, y);
-    }
-}
-
-class Sedan extends Vehicle {
-    private int d;
-
-    public Sedan(String m, String mod, int y, int d) {
-        super(m, mod, y); this.d = d;
-    }
-
-    @Override
-    public String display() {
-        return super.display() + String.format(", Doors: %d", d);
-    }
-}
-
-class CargoTruck extends Vehicle {
-    private double c;
-
-    public CargoTruck(String m, String mod, int y, double c) {
-        super(m, mod, y); this.c = c;
-    }
-
-    @Override
-    public String display() {
-        return super.display() + String.format(", Capacity: %.2f tons", c);
-    }
-}
-
-public class FleetManagement {
+public class CustomerService {
     public static void main(String[] args) {
-        Vehicle sedan = new Sedan("Toyota", "Camry", 2020, 4);
-        Vehicle truck = new CargoTruck("Ford", "F-150", 2019, 2.5);
-        System.out.println(sedan.display());
-        System.out.println(truck.display());
+        String[] customers = {"John", "jane", "Alice", "john", "JANE", "Bob", "alice"};
+        boolean[] checked = new boolean[customers.length];
+
+        System.out.println("Duplicate customer names:");
+        for (int i = 0; i < customers.length; i++) {
+            if (checked[i]) continue; // Skip already checked names
+            for (int j = i + 1; j < customers.length; j++) {
+                if (customers[i].equalsIgnoreCase(customers[j])) {
+                    System.out.println(customers[i]);
+                    checked[j] = true; // Mark as checked
+                }
+            }
+        }
     }
 }
-
