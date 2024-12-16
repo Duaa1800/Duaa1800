@@ -1,19 +1,44 @@
-final class ShippingBox {
-    private double width, height, depth;
+abstract class Account {
+    protected String id; protected double balance;
 
-    public ShippingBox(double width, double height, double depth) {
-        this.width = width; this.height = height; this.depth = depth;
+    public Account(String id, double balance) {
+        this.id = id; this.balance = balance;
     }
 
-    public double calculateVolume() {
-        return width * height * depth;
+    public String getID() { return id; }
+    public double getBalance() { return balance; }
+    public abstract boolean withdraw(double amount);
+    public abstract void deposit(double amount);
+}
+
+class SavingsAccount extends Account {
+    private static final double MIN_DEPOSIT = 10, WITHDRAWAL_FEE = 2;
+
+    public SavingsAccount(String id, double initialDeposit) {
+        super(id, initialDeposit < MIN_DEPOSIT ? throw new IllegalArgumentException("Min $10") : initialDeposit);
     }
+
+    public boolean withdraw(double amount) {
+        if (amount + WITHDRAWAL_FEE <= balance - MIN_DEPOSIT) {
+            balance -= (amount + WITHDRAWAL_FEE); return true;
+        }
+        return false;
+    }
+
+    public void deposit(double amount) { balance += amount; }
 }
 
 public class Main {
     public static void main(String[] args) {
-        ShippingBox box = new ShippingBox(2.0, 3.0, 4.0);
-        System.out.printf("Volume: %.2f%n", box.calculateVolume());
+        SavingsAccount acc = new SavingsAccount("SA123", 50);
+        acc.deposit(20);
+        System.out.printf("Balance: $%.2f%n", acc.getBalance());
+
+        for (double amt : new double[]{30, 15}) {
+            if (acc.withdraw(amt)) 
+                System.out.printf("New Balance: $%.2f%n", acc.getBalance());
+            else 
+                System.out.println("Insufficient funds.");
+        }
     }
 }
- 
