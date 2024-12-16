@@ -1,35 +1,27 @@
-class Car {
-    private String make, model;
-    private int year;
-    private double price;
-
-    public Car(String make, String model, int year, double price) {
-        this.make = make; this.model = model; this.year = year; this.price = price;
+class PaymentProcessor {
+    // Default payment method
+    public void processPayment() {
+        System.out.println("Processing default payment.");
     }
 
-    public void display() {
-        System.out.printf("%s %s (%d): $%.2f - Classic: %b%n", make, model, year, price, isClassic());
+    
+    public void processPayment(int amount) {
+        System.out.printf("Processing payment of amount %d.%n", amount);
     }
 
-    public void applyDiscount(double percentage) {
-        price *= (1 - percentage / 100);
-    }
-
-    public boolean isClassic() {
-        return 2024 - year > 20; // Assuming current year is 2024
+   
+    public void processPayment(int amount, String customerName) {
+        System.out.printf("Processing payment of %d for %s.%n", amount, customerName);
     }
 }
 
-public class Showroom {
+public class Main {
     public static void main(String[] args) {
-        Car[] cars = { new Car("Ford", "Mustang", 1967, 30000), new Car("Toyota", "Camry", 2020, 24000) };
-
-        for (Car car : cars) {
-            car.display();
-            if (car.year == 2020) car.applyDiscount(10); // Apply discount to Camry
-        }
+        PaymentProcessor processor = new PaymentProcessor();
         
-        System.out.println("After discount:");
-        for (Car car : cars) car.display();
+        processor.processPayment(); // No parameters
+        processor.processPayment(100); // One integer parameter
+        processor.processPayment(200, "Alice"); // Two parameters
     }
 }
+
