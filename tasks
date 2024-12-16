@@ -1,26 +1,25 @@
-import java.util.Scanner;
+import java.util.Random;
 
-public class TemperatureReport {
+public class InventoryManagement {
     public static void main(String[] args) {
-        double[] temps = new double[7];
-        Scanner scanner = new Scanner(System.in);
+        int[][] stock = new int[5][4];
+        Random rand = new Random();
 
-        for (int i = 0; i < 7; i++) {
-            System.out.print("Enter temp for day " + (i + 1) + ": ");
-            temps[i] = scanner.nextDouble();
+        // Initialize stock levels and display them
+        int[] totalStock = new int[5];
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 4; j++) {
+                stock[i][j] = rand.nextInt(101);
+                totalStock[i] += stock[i][j];
+                System.out.printf("Product %d, Branch %d: %d%n", i + 1, j + 1, stock[i][j]);
+            }
         }
 
-        double sum = 0, max = temps[0], min = temps[0];
-        for (double temp : temps) {
-            sum += temp;
-            if (temp > max) max = temp;
-            if (temp < min) min = temp;
-        }
+        // Find product with highest total stock
+        int maxIndex = 0;
+        for (int i = 1; i < totalStock.length; i++) 
+            if (totalStock[i] > totalStock[maxIndex]) maxIndex = i;
 
-        System.out.printf("Avg: %.2f, Highest: %.2f, Lowest: %.2f%n", sum / 7, max, min);
-        for (int i = 0; i < 7; i++) {
-            System.out.printf("Day %d: %.2f%n", i + 1, temps[i]);
-        }
-        scanner.close();
+        System.out.printf("Product %d has the highest total stock: %d%n", maxIndex + 1, totalStock[maxIndex]);
     }
 }
