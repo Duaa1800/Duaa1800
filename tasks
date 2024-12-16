@@ -1,44 +1,19 @@
-abstract class Person {
-    protected String name, address, phone, email;
-    public Person(String n, String a, String p, String e) {
-        name = n; address = a; phone = p; email = e;
-    }
-}
+final class ShippingBox {
+    private double width, height, depth;
 
-abstract class Employee extends Person {
-    protected double salary; 
-    protected String dateHired;
-    public Employee(String n, String a, String p, String e, double s, String d) {
-        super(n, a, p, e); salary = s; dateHired = d;
+    public ShippingBox(double width, double height, double depth) {
+        this.width = width; this.height = height; this.depth = depth;
     }
-    public abstract String getDetails();
-}
 
-class Faculty extends Employee {
-    private String dept;
-    public Faculty(String n, String a, String p, String e, double s, String d, String dept) {
-        super(n, a, p, e, s, d); this.dept = dept;
-    }
-    public String getDetails() {
-        return String.format("Faculty: %s | Dept: %s | Salary: %.2f | Hired: %s", name, dept, salary, dateHired);
-    }
-}
-
-class Staff extends Employee {
-    private String role;
-    public Staff(String n, String a, String p, String e, double s, String d, String role) {
-        super(n, a, p, e, s, d); this.role = role;
-    }
-    public String getDetails() {
-        return String.format("Staff: %s | Role: %s | Salary: %.2f | Hired: %s", name, role, salary, dateHired);
+    public double calculateVolume() {
+        return width * height * depth;
     }
 }
 
 public class Main {
     public static void main(String[] args) {
-        Employee f = new Faculty("Alice", "123 Main St", "555-1234", "alice@example.com", 60000.00, "2021-01-15", "CS");
-        Employee s = new Staff("Bob", "456 Elm St", "555-5678", "bob@example.com", 40000.00, "2020-08-20", "Admin");
-        System.out.println(f.getDetails());
-        System.out.println(s.getDetails());
+        ShippingBox box = new ShippingBox(2.0, 3.0, 4.0);
+        System.out.printf("Volume: %.2f%n", box.calculateVolume());
     }
 }
+ 
