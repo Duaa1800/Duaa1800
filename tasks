@@ -1,20 +1,48 @@
-import java.util.HashSet;
+class Vehicle {
+    private String m, mod; 
+    protected int y;
 
-public class CustomerService {
-    public static void main(String[] args) {
-        String[] customers = {"John", "jane", "Alice", "john", "JANE", "Bob", "alice"};
-        HashSet<String> seen = new HashSet<>();
-        HashSet<String> duplicates = new HashSet<>();
+    public Vehicle(String m, String mod, int y) {
+        this.m = m; this.mod = mod; this.y = y;
+    }
 
-        for (String customer : customers) {
-            if (!seen.add(customer.toLowerCase())) {
-                duplicates.add(customer.toLowerCase());
-            }
-        }
-
-        System.out.println("Duplicate customer names:");
-        for (String dup : duplicates) {
-            System.out.println(dup);
-        }
+    public String display() {
+        return String.format("Manufacturer: %s, Model: %s, Year: %d", m, mod, y);
     }
 }
+
+class Sedan extends Vehicle {
+    private int d;
+
+    public Sedan(String m, String mod, int y, int d) {
+        super(m, mod, y); this.d = d;
+    }
+
+    @Override
+    public String display() {
+        return super.display() + String.format(", Doors: %d", d);
+    }
+}
+
+class CargoTruck extends Vehicle {
+    private double c;
+
+    public CargoTruck(String m, String mod, int y, double c) {
+        super(m, mod, y); this.c = c;
+    }
+
+    @Override
+    public String display() {
+        return super.display() + String.format(", Capacity: %.2f tons", c);
+    }
+}
+
+public class FleetManagement {
+    public static void main(String[] args) {
+        Vehicle sedan = new Sedan("Toyota", "Camry", 2020, 4);
+        Vehicle truck = new CargoTruck("Ford", "F-150", 2019, 2.5);
+        System.out.println(sedan.display());
+        System.out.println(truck.display());
+    }
+}
+
