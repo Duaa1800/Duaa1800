@@ -1,25 +1,20 @@
-import java.util.Random;
+import java.util.HashSet;
 
-public class InventoryManagement {
+public class CustomerService {
     public static void main(String[] args) {
-        int[][] stock = new int[5][4];
-        Random rand = new Random();
+        String[] customers = {"John", "jane", "Alice", "john", "JANE", "Bob", "alice"};
+        HashSet<String> seen = new HashSet<>();
+        HashSet<String> duplicates = new HashSet<>();
 
-        // Initialize stock levels and display them
-        int[] totalStock = new int[5];
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 4; j++) {
-                stock[i][j] = rand.nextInt(101);
-                totalStock[i] += stock[i][j];
-                System.out.printf("Product %d, Branch %d: %d%n", i + 1, j + 1, stock[i][j]);
+        for (String customer : customers) {
+            if (!seen.add(customer.toLowerCase())) {
+                duplicates.add(customer.toLowerCase());
             }
         }
 
-        // Find product with highest total stock
-        int maxIndex = 0;
-        for (int i = 1; i < totalStock.length; i++) 
-            if (totalStock[i] > totalStock[maxIndex]) maxIndex = i;
-
-        System.out.printf("Product %d has the highest total stock: %d%n", maxIndex + 1, totalStock[maxIndex]);
+        System.out.println("Duplicate customer names:");
+        for (String dup : duplicates) {
+            System.out.println(dup);
+        }
     }
 }
