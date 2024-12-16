@@ -1,8 +1,10 @@
 abstract class Account {
-    protected String id; protected double balance;
+    protected String id; 
+    protected double balance;
 
     public Account(String id, double balance) {
-        this.id = id; this.balance = balance;
+        this.id = id; 
+        this.balance = balance;
     }
 
     public String getID() { return id; }
@@ -15,17 +17,25 @@ class SavingsAccount extends Account {
     private static final double MIN_DEPOSIT = 10, WITHDRAWAL_FEE = 2;
 
     public SavingsAccount(String id, double initialDeposit) {
-        super(id, initialDeposit < MIN_DEPOSIT ? throw new IllegalArgumentException("Min $10") : initialDeposit);
+        super(id, initialDeposit);
+        if (initialDeposit < MIN_DEPOSIT) {
+            throw new IllegalArgumentException("Minimum deposit is $10");
+        }
     }
 
+    @Override
     public boolean withdraw(double amount) {
         if (amount + WITHDRAWAL_FEE <= balance - MIN_DEPOSIT) {
-            balance -= (amount + WITHDRAWAL_FEE); return true;
+            balance -= (amount + WITHDRAWAL_FEE);
+            return true;
         }
         return false;
     }
 
-    public void deposit(double amount) { balance += amount; }
+    @Override
+    public void deposit(double amount) { 
+        balance += amount; 
+    }
 }
 
 public class Main {
