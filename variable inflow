@@ -1,0 +1,27 @@
+#include <stdio.h>
+#include <math.h>
+
+#define Q_in 2.0         // inflow rate (liters/min)
+#define Q_out 1.5        // outflow rate (liters/min)
+#define dt 1.0           // time step
+
+double variable_concentration(double t) {
+    return 5 + 3 * sin(0.1 * t); // Varying concentration between [2,8]
+}
+
+int main() {
+    double S = 0.0; // initial amount of salt
+
+    printf("Time (min)\tSalt Amount (g)\n");
+    for (int i = 0; i < 60; i++) {
+        double C_in = variable_concentration(i * dt);
+        
+        double C_out = (S / (Q_in - Q_out)); // assuming well-mixed tank
+        
+        S += (C_in * Q_in - C_out * Q_out) * dt;
+
+        printf("%.1f\t\t%.2f\n", i * dt, S);
+    }
+
+    return 0;
+}
