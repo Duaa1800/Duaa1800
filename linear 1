@@ -1,0 +1,26 @@
+#include <stdio.h>
+
+#define Q_in 2.0  // inflow rate (liters/min)
+#define Q_out 1.5 // outflow rate (liters/min)
+#define C_in 5.0  // concentration of inflow (grams/liter)
+#define dt 1.0    // time step (minutes)
+
+int main() {
+    double S = 0.0; // initial amount of salt in grams
+    double time = 0.0;
+
+    printf("Time (min)\tSalt Amount (g)\n");
+    for (int i = 0; i < 60; i++) { // simulate for 60 minutes
+        // Calculate outflow concentration
+        double C_out = (S / (Q_in - Q_out)); // assuming tank is well-mixed
+        
+        // Update amount of salt using the differential equation
+        S += (C_in * Q_in - C_out * Q_out) * dt;
+
+        // Print results
+        printf("%.1f\t\t%.2f\n", time, S);
+        time += dt;
+    }
+
+    return 0;
+}
